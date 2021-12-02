@@ -53,7 +53,7 @@ def create_domain_one_passenger():
             ),
             effects=(
                 neg(('at', 't', 'px', 'py')),
-                ('at', 't', 'px', 'bx'),
+                ('at', 't', 'bx', 'py'),
             ),
         ),
         Action(
@@ -70,7 +70,7 @@ def create_domain_one_passenger():
             ),
             effects=(
                 neg(('at', 't', 'px', 'py')),
-                ('at', 't', 'px', 'bx'),
+                ('at', 't', 'bx', 'py'),
             ),
         ),
         Action(
