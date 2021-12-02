@@ -88,6 +88,7 @@ def create_domain_one_passenger():
             ),
             effects=(
                 neg(('free', 't')),
+                neg(('at', 'p', 'px', 'py')),
                 ('on_taxi', 'p'),
             ),
         ),
@@ -102,11 +103,11 @@ def create_domain_one_passenger():
             preconditions=(
                 ('on_taxi', 'p'),
                 ('at', 't', 'px', 'py'),
-                ('at', 'p', 'px', 'py'),
             ),
             effects=(
                 neg(('on_taxi', 'p')),
                 ('free', 't'),
+                ('at', 'p', 'px', 'py'),
             ),
         ),
     ))

@@ -87,6 +87,7 @@ def create_domain_multiple_passengers():
             ),
             effects=(
                 ('on_taxi', 'p'),
+                neg(('at', 'p', 'px', 'py')),
             ),
         ),
         Action(
@@ -100,10 +101,10 @@ def create_domain_multiple_passengers():
             preconditions=(
                 ('on_taxi', 'p'),
                 ('at', 't', 'px', 'py'),
-                ('at', 'p', 'px', 'py'),
             ),
             effects=(
                 neg(('on_taxi', 'p')),
+                ('at', 'p', 'px', 'py'),
             ),
         ),
     ))
