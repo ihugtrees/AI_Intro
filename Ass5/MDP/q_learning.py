@@ -41,7 +41,8 @@ def update_q_table(q_table, cur_state, new_state, action, reward, learning_rate)
     # TODO: implement q_table update function
     # print("update q table for Q Learning is not implemented yet")
 
-
+    q_table[cur_state][action] = (1 - learning_rate) * q_table[cur_state][action] + learning_rate * (
+                reward + max(q_table[new_state].values()))
 
     return q_table
 
@@ -54,12 +55,13 @@ def choose_action_to_execute(q_table, current_state):
     """
     # TODO: implement how to choose an action to execute
     exploration_rate = 0.5  # The probability to exploit, please make sure the value is 0.5 when submitting!
+    max_key = max(q_table[current_state], key=q_table[current_state].get)
     if random.uniform(0, 1) > exploration_rate:  # HINT: Explore or exploit?
-        print("action to execute for Q Learning is not implemented yet")
+        return max_key
     else:
-        print("action to execute for Q Learning is not implemented yet")
-    return 'north'
-
+        new_arr = ['north', 'south', 'east', 'west']
+        new_arr.remove(max_key)
+        return new_arr[random.randint(0, len(new_arr) - 1)]
 
 
 def get_policy(instance, q_table):
@@ -69,10 +71,8 @@ def get_policy(instance, q_table):
     :return: Dictionary of policy in the form: (x,y): 'direction'
     """
     policy = instance.create_policy_array()  # Init with all states points to 'south'
-    for state in q_table.keys():  # For each s in S
-        print("get policy for Q learning is not implemented yet")
-    demo_policy = {(0, 0): 'north', (0, 1): 'north', (1, 1): 'south'}
-    print("Policy for exmaple ", demo_policy)
+    for state in policy.keys():  # For each s in S
+        policy[state] = max(q_table[state], key=q_table[state].get)
     return policy
 
 
@@ -85,24 +85,24 @@ def q_learning(instance, learning_rate=0.01, num_episodes=10000):
     """
     q_table = {}
     q_table = add_new_state_to_q_table(instance, q_table, instance.current_state)
-    first_q_table = q_table  # Only in use when none of the functions are implemented yet
+    # first_q_table = q_table  # Only in use when none of the functions are implemented yet
     while num_episodes > 0:
         cur_state = instance.current_state
         action = choose_action_to_execute(q_table, instance.current_state)
         new_state, reward = instance.execute_action(action)
         if new_state not in q_table.keys():  # If we have reached a new state for the first time
             # TODO: add new state for q table
-            print("What happens if state does not exist in our q table yet?'")
-            print("HINT: use a previously implemented function")
+            # print("What happens if state does not exist in our q table yet?'")
+            # print("HINT: use a previously implemented function")
+            q_table = add_new_state_to_q_table(instance, q_table, instance.current_state)
+
         # update_q_table function below needs to be implemented by the student
         q_table = update_q_table(q_table, cur_state, new_state, action, reward, learning_rate)
         if instance.is_episode_over():  # If we have reached the end state
             instance.new_episode()
             num_episodes -= 1
-        if first_q_table == q_table:
-            print("No update was made to the original q_table, aborting..")
-            break
+        # if first_q_table == q_table:
+        #     print("No update was made to the original q_table, aborting..")
+        #     break
     print(q_table)
     return get_policy(instance, q_table)
-
-

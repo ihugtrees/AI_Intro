@@ -49,11 +49,7 @@ def get_policy(instance, q_table):
     policy = instance.create_policy_array()
     for state in q_table.keys():  # For each s in S
         # TODO: create policy based on the latest q_table
-        # print("get policy for value iteration is not implemented yet")
         policy[state] = max(q_table[state], key=q_table[state].get)
-
-    # demo_policy = {(0, 0): 'north', (0, 1): 'north', (1, 1): 'south'}
-    # print("Policy for exmaple ", demo_policy)
     return policy
 
 
@@ -75,7 +71,6 @@ def value_iteration(instance):
                                    current_iteration_value_array)
         # TODO: Condition to stop the iterations, add the relevant function here
         if value_change(previous_iteration_value_array, current_iteration_value_array) < epsilon:
-            # print('Needs to implement the stop condition for the loop')
             print(f'finished after {c} iterations')
             break
         previous_iteration_value_array = current_iteration_value_array
